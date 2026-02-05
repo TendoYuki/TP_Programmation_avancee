@@ -1,5 +1,5 @@
 import pytest
-import decorateur_fonction_exemple
+import functools
 # ----------------------------------- EXO 2 -----------------------------------
 def exo2():
     print(" ----------------------------------- EXO 2 -----------------------------------")
@@ -110,13 +110,14 @@ def zero(f, a, b, *, precision=10e-5):
     return (a + b) / 2
 
 def exo7():
+    print(" ----------------------------------- EXO 7 -----------------------------------")
     print("Le paramètre f est une fonction")
     print("On donne une valeur au paramètre appelé précision en l'écrivant explicitement car il y a une '*' dans les paramètres")
     # TODO : appeler la fonction zero avec la fonction f (x) = x2 − 2x − 15 sur l’intervalle [0, 15] avec une précision de 0.01.
 
-
 # ----------------------------------- EXO 8 -----------------------------------
 def fn_bavard(f):
+    @functools.wraps(f)
     def f_interne(*p, **k):
         print('debut de f_interne()')
         f(*p, **k)
@@ -129,9 +130,32 @@ def exemple(x, y='ok'):
     print('exemple:', y, x)
 
 def exo8():
+    print(" ----------------------------------- EXO 8 -----------------------------------")
     print('Appel à exemple')
     exemple('?')
     print(exemple.__qualname__)
+
+# ----------------------------------- EXO 9 -----------------------------------
+def deprecated(f):
+    @functools.wraps(f)
+    def f_interne(*p,**k):
+        print(f'La fonction {f.__qualname__} ne devrait plus être utilisé', )
+    return f_interne
+
+@deprecated
+def exemple2(x, y='ok'):
+    print('exemple2:', y, x)
+
+def exo9():
+    print(" ----------------------------------- EXO 9 -----------------------------------")
+    print('Appel à exemple')
+    exemple2('?')
+
+
+# ----------------------------------- EXO 10 -----------------------------------
+def trace(f):
+    def f_interne(*p, **k):
+        print()
 
 
 #exo2()
@@ -141,3 +165,4 @@ def exo8():
 #exo6()
 #exo7()
 #exo8()
+#exo9()
